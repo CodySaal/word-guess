@@ -1,22 +1,37 @@
 var startBtn = document.querySelector(".start-button")
 var wordBlanksEl = document.querySelector(".word-blanks")
-
+var validChars = "abcdefghijklmnopqrstuvwxyz"
 var words = ["jacascript", "variable", "function", "python", "localstorage", "timeout", "interval", "object", "vscode"]
 var word 
+var guessedCharacters = []
 // score ariable
 // timeLeft variable
 
+function handleKeydown(event){
+    console.log(event.key)
+    if (validChars.includes(event.key)){
+        // keep track of the character that was guessed
+        guessedCharacters.push(event.key);
+        // re-render wordBlanks.textContent
+        renderCharacters();
+    }
+    // validate key
+}
 
 function renderCharacters(){
     var str = ""
     for (var i =0; i < word.length; i++){
+       var letter = word[i]
         // if we have guessed the character 
-            // add the character into str
-        // else
-            // add an _ into str
+        if (guessedCharacters.includes(letter)) {
+             str += letter + " "
+        } else {
             str += "_ "
-            console.log(str)
+        }
+           
+            
     }
+    console.log(str)
     wordBlanksEl.textContent = str.trim()
 }
 
@@ -28,3 +43,5 @@ function startRound(){
 }
 
 startBtn.addEventListener("click", startRound)
+
+document.addEventListener("keydown", handleKeydown)
